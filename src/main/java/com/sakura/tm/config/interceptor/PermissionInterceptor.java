@@ -41,12 +41,15 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 				return true;
 			}
 			String userId = request.getAttribute("user_id").toString();
+			PermissionEnum[] permissionEnums = permission.permissionEnums();
+			if (permissionEnums.length == 0) {
+				return true;
+			}
 			if (CommonsUtil.isBlank(redisTemplate.opsForHash().get(CommonConstant.REDIS_PERMISSION_KEY, userId))) {
 				returnNoPermission("用户无权限", response);
 				return false;
 			}
 			String userSigns = redisTemplate.opsForHash().get(CommonConstant.REDIS_PERMISSION_KEY, userId).toString();
-			PermissionEnum[] permissionEnums = permission.permissionEnums();
 			List<String> list = Arrays.asList(userSigns.split(","));
 			for (PermissionEnum permissionEnum : permissionEnums) {
 				if (!list.contains(permissionEnum.getSign())) {

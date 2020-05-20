@@ -13,6 +13,9 @@ import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * @author 李七夜
+ */
 @Data
 @Builder
 @Alias("user")
