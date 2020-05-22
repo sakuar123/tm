@@ -1,7 +1,8 @@
 package com.sakura.tm.common.util;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.Assert;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.util.DigestUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -12,31 +13,16 @@ import java.security.NoSuchAlgorithmException;
  */
 @Slf4j
 public class MD5Util {
-	//盐，用于混交md5
-	private static final String slat = "&%5123***&&%%$$#@";
 
 	/**
-	 * 生成md5
+	 * 生成md5,不可逆操作
 	 * @param plainText
 	 * @return
 	 */
-	public static String getMD5(String plainText) {
-		String base = plainText + "/" + slat;
-		StringBuffer result = new StringBuffer();
-		try {
-			MessageDigest m = MessageDigest.getInstance("MD5");
-			m.update(base.getBytes("UTF8"));
-			byte s[]=m.digest();
-			for (int i = 0; i < s.length; i++) {
-				result.append(Integer.toHexString((0x000000ff & s[i]) | 0xffffff00).substring(6));
-			}
-			return result.toString();
-		} catch (NoSuchAlgorithmException e) {
-			log.error("MD5加密时异常:" + e.getMessage());
-		} catch (UnsupportedEncodingException e) {
-			log.error("MD5加密时异常:" + e.getMessage());
-		}
-		Assert.isNull(result, "MD5加密异常");
-		return null;
+	public static String getMd5(String plainText) {
+		////生成从ASCII 32到126组成的随机字符串 （包括符号）
+		String salt = RandomStringUtils.randomAscii(12);
+		String base = Base64Utils.getEncode(plainText + salt);
+		return DigestUtils.md5DigestAsHex(base.getBytes());
 	}
 }

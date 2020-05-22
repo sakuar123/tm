@@ -2,7 +2,9 @@ package com.sakura.tm.web.controller;
 
 import com.sakura.tm.common.annotation.Permission;
 import com.sakura.tm.common.util.JsonResult;
+import com.sakura.tm.common.util.PageResult;
 import com.sakura.tm.service.UserService;
+import com.sakura.tm.web.query.BaseQuery;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +26,8 @@ public class UserController {
 	@Permission()
 	@ApiOperation("用户集合")
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public JsonResult list() {
-		return userService.list();
+	public PageResult list(BaseQuery baseQuery) {
+		return userService.list(baseQuery);
 	}
 
 	@Permission(noLogin = true)

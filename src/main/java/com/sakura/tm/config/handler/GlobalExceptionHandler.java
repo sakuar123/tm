@@ -46,6 +46,6 @@ public class GlobalExceptionHandler {
 	@ResponseBody
 	public JsonResult<Object> errorException(ErrorException e) {
 		log.error(e.getMessage());
-		return JsonResult.fail(e.getMessage());
+		return e.getJsonResult();
 	}
 }

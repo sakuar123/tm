@@ -15,7 +15,6 @@ public enum CommonsMessageEnum {
     IMPOSSIBLE_ERROR(-2, "不可能发生的异常"),
     REQUEST_PARAM_ERROR(-3, "请求参数异常"),
     ENUM_IS_ILLEGAL(-4, "枚举类型不合法"),
-    TAXPAYERID_IS_ILLEGAL(-5, "仅支持18位税号"),
 
     OK(200, "OK"),
     BAD_REQUEST(400, "参数不合法"),
@@ -36,8 +35,6 @@ public enum CommonsMessageEnum {
         for (CommonsMessageEnum messageEnum : values()) {
             if (Objects.equals(messageEnum.getCode(), code)) {
                 if (messageEnum == BAD_REQUEST) {
-                    // 400 异常中的 message 被定义为 ValidError 数组
-                    // 所以通过 code 反解析时需要转换为 REQUEST_PARAM_ERROR
                     return REQUEST_PARAM_ERROR;
                 }
                 return messageEnum;

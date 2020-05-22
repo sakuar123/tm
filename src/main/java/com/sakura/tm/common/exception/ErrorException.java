@@ -2,12 +2,14 @@ package com.sakura.tm.common.exception;
 
 
 import com.sakura.tm.common.util.JsonResult;
+import lombok.Data;
 
 /**
  * Created by 李七夜 on 2020/5/13 11:07
  * 自定义的异常类
  * @author 李七夜
  */
+@Data
 public class ErrorException extends RuntimeException {
 	private static final long serialVersionUID = -7677230804556063870L;
 

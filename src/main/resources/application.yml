@@ -1,0 +1,47 @@
+#修改端口号
+server:
+  port: 8091
+#数据库连接以及redis配置
+spring:
+  datasource:
+    #数据库连接url
+    url: jdbc:mysql://localhost:3306/smbms?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    #用户名
+    username: sakura
+    #密码
+    password: sakura
+    #指定连接驱动
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    #指定数据类型
+    database: mysql
+  redis:
+    #Redis数据库索引（默认为0）
+    database: 0
+    # Redis服务器地址
+    host: localhost
+    # Redis服务器连接密码（默认为空）
+    password:
+    jedis:
+      pool:
+        # 连接池最大连接数（使用负值表示没有限制）
+        max-active: 50
+        # 连接池中的最大空闲连接
+        max-idle: 30
+    # Redis服务器连接端口
+    port: 6379
+#Mybatis配置
+logging:
+  level:
+    com.sakura.tm.dao: debug
+mybatis:
+  #mapper映射文件地址
+  mapper-locations: classpath*:mybaties/mapper/*.xml
+  #别名实体类地址
+  type-aliases-package: com.sakura.tm.common.entity
+#PageHelper配置
+pagehelper:
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+helper-dialect: mysql
