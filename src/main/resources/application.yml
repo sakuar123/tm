@@ -5,7 +5,7 @@ server:
 spring:
   datasource:
     #数据库连接url
-    url: jdbc:mysql://localhost:3306/smbms?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/tm?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     #用户名
     username: sakura
     #密码
@@ -36,7 +36,7 @@ logging:
     com.sakura.tm.dao: debug
 mybatis:
   #mapper映射文件地址
-  mapper-locations: classpath*:mybaties/mapper/*.xml
+  mapper-locations: classpath*:mybatis/mapper/*.xml
   #别名实体类地址
   type-aliases-package: com.sakura.tm.common.entity
 #PageHelper配置
