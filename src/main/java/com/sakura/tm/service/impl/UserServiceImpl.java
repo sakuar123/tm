@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.google.common.collect.Maps;
 import com.sakura.tm.common.emnu.CommonsMessageEnum;
 import com.sakura.tm.common.entity.LoanUser;
+import com.sakura.tm.common.entity.example.LoanUserExample;
 import com.sakura.tm.common.util.*;
 import com.sakura.tm.dao.generator.UserGeneratorMapper;
 import com.sakura.tm.service.UserService;
@@ -38,9 +39,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public JsonResult login(String userName, String password) {
 		Map<String, String> result = Maps.newHashMap();
-		Example example = new Example(LoanUser.class);
-		example.or().andEqualTo("userCode", userName);
-		LoanUser user = userGeneratorMapper.selectOneByExample(example);
+		LoanUser user = userGeneratorMapper.selectOneByExample(new LoanUserExample().or().andUserNameEqualTo(userName).example());
 		Assert.isTrue(CommonsUtil.isNotBlank(user), CommonsMessageEnum.FAILURE);
 		String userKey = DESUtil.getSHA256(user.getUserName());
 		redisTemplate.opsForHash().put(CommonConstant.REDIS_USER_KEY, userKey, user.getUserId().toString());
