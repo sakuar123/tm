@@ -8,10 +8,9 @@
     <!--指定特定数据库的jdbc驱动jar包的位置(绝对路径)-->
     <classPathEntry location="${jdbc.driverLocation}"/>
     <context id="default" targetRuntime="MyBatis3">
-
         <!-- 带上序列化接口 -->
-        <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
-        <plugin type="org.mybatis.generator.plugins.LombokPlugin">
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <plugin type="org.mybatis.generator.plugins.LombokPlug">
             <property name="hasLombok" value="true"/>
         </plugin>
         <commentGenerator>
@@ -33,7 +32,7 @@
             <!-- 是否允许子包，即targetPackage.schemaName.tableName -->
             <property name="enableSubPackages" value="false"/>
             <!-- 是否对model添加 构造函数 -->
-            <property name="constructorBased" value="true"/>
+            <property name="constructorBased" value="false"/>
             <!-- 是否对类CHAR类型的列的数据进行trim操作 -->
             <property name="trimStrings" value="true"/>
             <!-- 建立的Model对象是否 不可改变  即生成的Model对象不会有 setter方法，只有构造方法 -->
@@ -51,13 +50,13 @@
         -->
         <javaClientGenerator targetPackage="com.sakura.tm.dao.mapper"
                              targetProject="${jdbc.basePath}src/main/java"
-                             type="ANNOTATEDMAPPER">
+                             type="XMLMAPPER">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
         <!-- 数据表进行生成操作 tableName:表名; domainObjectName:对应的DO -->
-        <table tableName="product_comments_info">
-            <generatedKey column="id" sqlStatement="JDBC"/>
+        <table tableName="loan_user">
+<!--            <generatedKey column="id" sqlStatement="JDBC"/>-->
             <!--            <columnOverride column="SSYF" javaType="java.lang.Integer"/>-->
             <!--            <columnOverride column="HJJE" javaType="java.lang.Double"/>-->
             <!--            <columnOverride column="SLV" javaType="java.lang.Double"/>-->
