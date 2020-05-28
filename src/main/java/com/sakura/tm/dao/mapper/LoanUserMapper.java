@@ -1,7 +1,7 @@
 package com.sakura.tm.dao.mapper;
 
 import com.sakura.tm.common.entity.LoanUser;
-import com.sakura.tm.common.entity.LoanUserExample;
+import com.sakura.tm.common.entity.example.LoanUserExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
