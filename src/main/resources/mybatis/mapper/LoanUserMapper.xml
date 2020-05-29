@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sakura.tm.dao.mapper.LoanUserMapper">
+  <resultMap id="BaseResultMap" type="com.sakura.tm.common.entity.LoanUser">
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="pwd_slt" jdbcType="VARCHAR" property="pwdSlt" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="birthday" jdbcType="TIMESTAMP" property="birthday" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="is_real_name_authentication" jdbcType="INTEGER" property="isRealNameAuthentication" />
+    <result column="id_card" jdbcType="VARCHAR" property="idCard" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    user_id, user_name, password, pwd_slt, phone, birthday, sex, state, is_real_name_authentication, 
+    id_card, create_time, update_time
+  </sql>
+</mapper>
