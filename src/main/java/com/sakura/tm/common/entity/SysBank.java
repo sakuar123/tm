@@ -3,6 +3,7 @@ package com.sakura.tm.common.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,12 +13,13 @@ import lombok.NoArgsConstructor;
  * 系统电子银行
  * sys_bank
  * @author 李七夜
- * @date 2020-05-28 17:59:13
+ * @date 2020-05-29 11:16:46
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "sys_bank")
 public class SysBank implements Serializable {
     /**
      */

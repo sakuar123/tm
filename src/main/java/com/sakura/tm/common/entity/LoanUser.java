@@ -2,6 +2,7 @@ package com.sakura.tm.common.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,12 +12,13 @@ import lombok.NoArgsConstructor;
  * 用户表
  * loan_user
  * @author 李七夜
- * @date 2020-05-28 19:07:33
+ * @date 2020-05-29 11:06:41
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "loan_user")
 public class LoanUser implements Serializable {
     /**
      */

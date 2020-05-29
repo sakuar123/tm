@@ -7,6 +7,7 @@ import com.sakura.tm.common.entity.LoanUser;
 import com.sakura.tm.common.entity.example.LoanUserExample;
 import com.sakura.tm.common.util.*;
 import com.sakura.tm.dao.generator.UserGeneratorMapper;
+import com.sakura.tm.dao.mapper.LoanUserMapper;
 import com.sakura.tm.service.UserService;
 import com.sakura.tm.web.query.BaseQuery;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +29,8 @@ public class UserServiceImpl implements UserService {
 	private UserGeneratorMapper userGeneratorMapper;
 	@Autowired
 	private RedisTemplate<String, String> redisTemplate;
+	@Autowired
+	private LoanUserMapper loanUserMapper;
 
 	@Override
 	public PageResult list(BaseQuery baseQuery) {
