@@ -11,4 +11,6 @@ import com.sakura.tm.common.util.PageData;
 public interface UserDigitaOrgService {
 
 	JsonResult register(PageData pageData);
+
+	JsonResult login(PageData pageData);
 }

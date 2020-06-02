@@ -25,10 +25,17 @@ public class UserController {
 	@Autowired
 	private UserDigitaOrgService userDigitaOrgService;
 
-	@Permission(noLogin = true)
 	@ApiOperation("注册用户")
+	@Permission(noLogin = true)
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public JsonResult register(HttpServletRequest request) {
 		return userDigitaOrgService.register(new PageData(request));
+	}
+
+	@ApiOperation("用户登录")
+	@Permission(noLogin = true)
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public JsonResult login(HttpServletRequest request) {
+		return userDigitaOrgService.login(new PageData(request));
 	}
 }

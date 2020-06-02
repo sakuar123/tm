@@ -14,7 +14,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public enum ResultMsgEnum implements IMessageConstant {
 
-	USER_EXITS(135, "该手机号已经被注册了,请换个手机号注册");
+	USER_EXITS(135, "该手机号已经被注册了,请换个手机号注册"),
+	USER_NOT_EXITS(136, "未注册，请先注册"),
+	USER_PWD_ERROR(201, "密码错误！"),
+	;
 
 	private int code;
 	private String message;

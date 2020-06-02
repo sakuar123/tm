@@ -10,8 +10,11 @@ import com.sakura.tm.dao.mapper.UserDigitaOrgMapper;
 import com.sakura.tm.service.UserDigitaOrgService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
 
 /**
  * @author 李七夜
@@ -26,6 +29,8 @@ public class UserDigitaOrgServiceImpl implements UserDigitaOrgService {
 	private UserDigitaOrgMapper userDigitaOrgMapper;
 	@Autowired
 	private CommonUserService commonUserService;
+	@Autowired
+	private RedisTemplate<String, String> redisTemplate;
 
 	/**
 	 * 用户注册
@@ -47,6 +52,24 @@ public class UserDigitaOrgServiceImpl implements UserDigitaOrgService {
 		}
 	}
 
+	@Override
+	public JsonResult login(PageData pageData) {
+		String phone = pageData.getString("phone");
+		String password = pageData.getString("password");
+		UserDigitaOrg userDigitaOrg = userDigitaOrgMapper.selectOneByExample(new UserDigitaOrgExample().or().andPhoneEqualTo(phone).example());
+		Assert.isTrue(CommonsUtil.isNotBlank(userDigitaOrg), ResultMsgEnum.USER_NOT_EXITS);
+		String md5Password = MD5Util.getMd5(password + userDigitaOrg.getPwdSlt());
+		Assert.isTrue(md5Password.equals(userDigitaOrg.getPassword()), ResultMsgEnum.USER_PWD_ERROR);
+		String redisKey = DESUtil.getSHA256(userDigitaOrg.getUserId().toString());
+		String token = JwtUtil.createJWT(org.apache.commons.lang3.time.DateUtils.addHours(new Date(), +2),
+				JwtUtil.buildJwtUser(redisKey, userDigitaOrg.getUserName()));
+		redisTemplate.opsForHash().put(CommonConstant.REDIS_USER_KEY, redisKey, userDigitaOrg.getUserId().toString());
+		PageData reuslt = new PageData();
+		reuslt.put("token", token);
+		reuslt.put("name", userDigitaOrg.getUserName());
+		return JsonResult.success(reuslt);
+	}
+
 	private UserDigitaOrg buildUser(PageData pageData) {
 		UserDigitaOrg userDigitaOrg = new UserDigitaOrg();
 		userDigitaOrg.setUserName(pageData.getString("userName"));
@@ -63,4 +86,5 @@ public class UserDigitaOrgServiceImpl implements UserDigitaOrgService {
 		userDigitaOrg.setZone(entityInfo.getString("zone"));
 		return userDigitaOrg;
 	}
+
 }
