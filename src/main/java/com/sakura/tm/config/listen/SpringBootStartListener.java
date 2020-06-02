@@ -36,6 +36,6 @@ public class SpringBootStartListener implements ApplicationListener<ApplicationR
 				contextPath,
 				"Swagger: \t\thttp://localhost:" + serverPort + contextPath
 						+ ("/".equals(contextPath) ? "" : "/")
-						+ "swagger-ui.html\n\t");
+						+ "swagger-ui.html");
 	}
 }

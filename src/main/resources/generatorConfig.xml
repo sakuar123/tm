@@ -69,12 +69,8 @@
         </javaClientGenerator>
 
         <!-- 数据表进行生成操作 tableName:表名; domainObjectName:对应的DO -->
-        <table tableName="sys_bank"
-               enableCountByExample="false"
-               enableUpdateByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               selectByExampleQueryId="false">
+        <table tableName="sys_apo_areacode"
+               enableCountByExample="false">
             <generatedKey column="id" sqlStatement="JDBC"/>
             <!--            <columnOverride column="SSYF" javaType="java.lang.Integer"/>-->
             <!--            <columnOverride column="HJJE" javaType="java.lang.Double"/>-->

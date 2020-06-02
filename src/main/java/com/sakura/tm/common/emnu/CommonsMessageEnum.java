@@ -9,7 +9,7 @@ import java.util.Objects;
 @Slf4j
 @Getter
 @AllArgsConstructor
-public enum CommonsMessageEnum {
+public enum CommonsMessageEnum implements IMessageConstant{
 
     FAILURE(-1, "操作失败"),
     IMPOSSIBLE_ERROR(-2, "不可能发生的异常"),

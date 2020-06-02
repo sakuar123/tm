@@ -35,9 +35,15 @@ public class SpringMvcConfig implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 		// 添加登录拦截器
 		registry.addInterceptor(ticketInterceptor)
-				.excludePathPatterns(serverProperties.getError().getPath());
+				.excludePathPatterns(serverProperties.getError().getPath())
+				.addPathPatterns("/**")
+				.excludePathPatterns("/login")
+				.excludePathPatterns("/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**");;
 		//添加权限校验拦截器
 		registry.addInterceptor(permissionInterceptor)
-				.excludePathPatterns(serverProperties.getError().getPath());
+				.excludePathPatterns(serverProperties.getError().getPath())
+				.addPathPatterns("/**")
+				.excludePathPatterns("/login")
+				.excludePathPatterns("/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**");;
 	}
 }

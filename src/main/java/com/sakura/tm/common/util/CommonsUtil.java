@@ -1,5 +1,6 @@
 package com.sakura.tm.common.util;
 
+import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -63,7 +64,8 @@ public class CommonsUtil {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(RandomStringUtils.random(15, false, true));
+//		System.out.println(RandomStringUtils.random(15, false, true));
+		System.out.println(JSON.toJSON(getIdentityInfoByIdCard("452123198911195219")));
 	}
 
 	/**
@@ -106,4 +108,90 @@ public class CommonsUtil {
 		return ipAddrStr;
 	}
 
+	/**
+	 * 通过身份证号获取身份信息
+	 * 出生日期,性别
+	 * @param certificateNo
+	 * @return
+	 */
+	public static PageData getIdentityInfoByIdCard(String certificateNo) {
+		String birthday = "";
+		String age = "";
+		String sexCode = "";
+
+		int year = Calendar.getInstance().get(Calendar.YEAR);
+		char[] number = certificateNo.toCharArray();
+		boolean flag = true;
+		if (number.length == 15) {
+			for (int x = 0; x < number.length; x++) {
+				if (!flag) return new PageData();
+				flag = Character.isDigit(number[x]);
+			}
+		} else if (number.length == 18) {
+			for (int x = 0; x < number.length - 1; x++) {
+				if (!flag) return new PageData();
+				flag = Character.isDigit(number[x]);
+			}
+		}
+		if (flag && certificateNo.length() == 15) {
+			birthday = "19" + certificateNo.substring(6, 8) + "-"
+					+ certificateNo.substring(8, 10) + "-"
+					+ certificateNo.substring(10, 12);
+			sexCode = Integer.parseInt(certificateNo.substring(certificateNo.length() - 3, certificateNo.length())) % 2 == 0 ? "F" : "M";
+			age = (year - Integer.parseInt("19" + certificateNo.substring(6, 8))) + "";
+		} else if (flag && certificateNo.length() == 18) {
+			birthday = certificateNo.substring(6, 10) + "-"
+					+ certificateNo.substring(10, 12) + "-"
+					+ certificateNo.substring(12, 14);
+			sexCode = Integer.parseInt(certificateNo.substring(certificateNo.length() - 4, certificateNo.length() - 1)) % 2 == 0 ? "F" : "M";
+			age = (year - Integer.parseInt(certificateNo.substring(6, 10))) + "";
+		}
+		PageData pd = new PageData();
+		pd.put("birthday", birthday);
+		pd.put("age", age);
+		pd.put("sexCode", sexCode);
+		return pd;
+	}
+
+	public static String parseString(String src) {
+		if (src == null || "null".equalsIgnoreCase(src)) {
+			return "";
+		} else {
+			return src.trim();
+		}
+	}
+
+	public static int parseInt(String s) {
+		return parseInt(s, 0);
+	}
+
+	public static int parseInt(String s, int defaultValue) {
+		try {
+			return Integer.parseInt(s);
+		} catch (Exception e) {
+			return defaultValue;
+		}
+	}
+	public static long parseLong(String s) {
+		return parseLong(s, -1l);
+	}
+	public static long parseLong(String s, long defaultValue) {
+		try {
+			return Long.parseLong(s);
+		} catch (Exception e) {
+			return defaultValue;
+		}
+	}
+
+	public static Double parseDouble(String value) {
+		return parseDouble(value, 0.0);
+	}
+
+	public static double parseDouble(String s, Double defaultValue) {
+		try {
+			return Double.parseDouble(s);
+		} catch (Exception e) {
+			return defaultValue;
+		}
+	}
 }

@@ -1,6 +1,7 @@
 package com.sakura.tm.common.util;
 
 import com.sakura.tm.common.emnu.CommonsMessageEnum;
+import com.sakura.tm.common.emnu.IMessageConstant;
 import com.sakura.tm.common.exception.ErrorException;
 
 /**
@@ -18,12 +19,12 @@ public class Assert {
 		}
 	}
 
-	public static void isTrue(boolean expression, CommonsMessageEnum commonsMessageEnum) {
+	public static void isTrue(boolean expression, IMessageConstant iMessageConstant) {
 		if (!expression) {
 			throw new ErrorException(JsonResult
 					.builder()
-					.code(commonsMessageEnum.getCode())
-					.message(commonsMessageEnum.getMessage())
+					.code(iMessageConstant.getCode())
+					.message(iMessageConstant.getMessage())
 					.data(null)
 					.build());
 		}

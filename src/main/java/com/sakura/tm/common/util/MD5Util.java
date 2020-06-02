@@ -21,8 +21,8 @@ public class MD5Util {
 	 */
 	public static String getMd5(String plainText) {
 		////生成从ASCII 32到126组成的随机字符串 （包括符号）
-		String salt = RandomStringUtils.randomAscii(12);
-		String base = Base64Utils.getEncode(plainText + salt);
+//		String salt = RandomStringUtils.randomAscii(12);
+		String base = Base64Utils.getEncode(plainText);
 		return DigestUtils.md5DigestAsHex(base.getBytes());
 	}
 }

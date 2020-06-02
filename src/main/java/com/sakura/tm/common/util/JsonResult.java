@@ -2,6 +2,8 @@ package com.sakura.tm.common.util;
 
 
 import com.sakura.tm.common.emnu.CommonsCodeEnum;
+import com.sakura.tm.common.emnu.IMessageConstant;
+import com.sakura.tm.common.exception.ErrorException;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,47 +34,38 @@ public class JsonResult<T> {
 	private T data;
 
 	public static <T> JsonResult success() {
-		return JsonResult
-				.builder()
-				.code(CommonsCodeEnum.success.getCode())
-				.message(CommonsCodeEnum.success.getName())
-				.data(true)
-				.build();
+		return of(CommonsCodeEnum.success.getCode(), CommonsCodeEnum.success.getName(), true);
 	}
 
 	public static <T> JsonResult success(T data) {
-		return JsonResult
-				.builder()
-				.code(CommonsCodeEnum.success.getCode())
-				.message(CommonsCodeEnum.success.getName())
-				.data(data)
-				.build();
+		return of(CommonsCodeEnum.success.getCode(), CommonsCodeEnum.success.getName(), data);
 	}
 
 	public static JsonResult fail(Exception e) {
-		return JsonResult
-				.builder()
-				.code(CommonsCodeEnum.fail.getCode())
-				.message("系统异常")
-				.data(Collections.EMPTY_MAP)
-				.build();
+		return of(CommonsCodeEnum.fail.getCode(), "系统异常");
+	}
+
+	public static JsonResult result(IMessageConstant iMessageConstant) {
+		return of(iMessageConstant.getCode(), iMessageConstant.getMessage());
 	}
 
 	public static JsonResult fail(String message) {
-		return JsonResult
-				.builder()
-				.code(CommonsCodeEnum.fail.getCode())
-				.message(message)
-				.data(Collections.EMPTY_MAP)
-				.build();
+		return of(CommonsCodeEnum.fail.getCode(), message);
 	}
 
 	public static JsonResult fail(Throwable e) {
-		return JsonResult
-				.builder()
-				.code(CommonsCodeEnum.fail.getCode())
-				.message("系统异常")
-				.data(Collections.EMPTY_MAP)
-				.build();
+		return of(CommonsCodeEnum.fail.getCode(), "系统异常");
+	}
+
+	public static JsonResult fail(ErrorException e) {
+		return e.getJsonResult();
+	}
+
+	public static JsonResult of(Integer code, String message) {
+		return of(code, message, null);
+	}
+
+	public static JsonResult of(Integer code, String message, Object data) {
+		return JsonResult.builder().data(data).message(message).code(code).build();
 	}
 }
