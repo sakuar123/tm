@@ -51,4 +51,11 @@ public class Base64Utils {
 			return "";
 		}
 	}
+
+	public static void main(String[] args) {
+		String str = "1";
+		char [] charArray = "1".toCharArray();
+		System.out.println(MD5Util.getMd5(str).substring(0,5));
+//		System.out.println(("1"));
+	}
 }

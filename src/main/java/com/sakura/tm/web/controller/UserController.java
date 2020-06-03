@@ -38,4 +38,11 @@ public class UserController {
 	public JsonResult login(HttpServletRequest request) {
 		return userDigitaOrgService.login(new PageData(request));
 	}
+
+	@ApiOperation("发送验证码")
+	@Permission(noLogin = true)
+	@RequestMapping(value = "/sendCaptcha", method = RequestMethod.GET)
+	public JsonResult sendCaptcha(HttpServletRequest request) {
+		return userDigitaOrgService.sendCaptcha(new PageData(request));
+	}
 }

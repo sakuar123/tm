@@ -13,4 +13,6 @@ public interface UserDigitaOrgService {
 	JsonResult register(PageData pageData);
 
 	JsonResult login(PageData pageData);
+
+	JsonResult sendCaptcha(PageData pageData);
 }
