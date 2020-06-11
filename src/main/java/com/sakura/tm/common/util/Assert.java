@@ -6,6 +6,7 @@ import com.sakura.tm.common.exception.ErrorException;
 
 /**
  * Created by 李七夜 on 2020/5/13 11:22
+ * @author 李七夜
  */
 public class Assert {
 
@@ -21,12 +22,7 @@ public class Assert {
 
 	public static void isTrue(boolean expression, IMessageConstant iMessageConstant) {
 		if (!expression) {
-			throw new ErrorException(JsonResult
-					.builder()
-					.code(iMessageConstant.getCode())
-					.message(iMessageConstant.getMessage())
-					.data(null)
-					.build());
+			throw new ErrorException(iMessageConstant);
 		}
 	}
 }
