@@ -69,17 +69,11 @@
         </javaClientGenerator>
 
         <!-- 数据表进行生成操作 tableName:表名; domainObjectName:对应的DO -->
-        <table tableName="product_type_org"
+        <table tableName="product_org"
                enableSelectByExample="false"
                enableDeleteByExample="false"
                enableUpdateByExample="false">
             <generatedKey column="id" sqlStatement="JDBC"/>
-            <!--            <columnOverride column="SSYF" javaType="java.lang.Integer"/>-->
-            <!--            <columnOverride column="HJJE" javaType="java.lang.Double"/>-->
-            <!--            <columnOverride column="SLV" javaType="java.lang.Double"/>-->
-            <!--            <columnOverride column="HJSE" javaType="java.lang.Double"/>-->
-            <!--            <columnOverride column="ZFBZ" javaType="java.lang.Boolean"/>-->
-            <!--            <columnOverride column="time_param" javaType="java.lang.String"/>-->
             <!--            <columnOverride column="update_time" javaType="java.util.Date"/>-->
             <!--            <columnOverride column="create_time" javaType="java.util.Date"/>-->
         </table>

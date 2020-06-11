@@ -38,7 +38,7 @@ mybatis:
   #mapper映射文件地址
   mapper-locations: classpath*:mybatis/mapper/*.xml
   #别名实体类地址
-  type-aliases-package: com.sakura.tm.common.entity
+  type-aliases-package: com.sakura.tm.common.entity,com.sakura.tm.common.util.PageData
 #PageHelper配置
 pagehelper:
   reasonable: true

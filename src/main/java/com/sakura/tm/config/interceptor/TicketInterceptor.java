@@ -3,6 +3,7 @@ package com.sakura.tm.config.interceptor;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.sakura.tm.common.annotation.Permission;
+import com.sakura.tm.common.emnu.ResultMsgEnum;
 import com.sakura.tm.common.util.Assert;
 import com.sakura.tm.common.util.CommonConstant;
 import com.sakura.tm.common.util.CommonsUtil;
@@ -38,9 +39,9 @@ public class TicketInterceptor extends HandlerInterceptorAdapter {
 			}
 			//登录所携带的token
 			String token = request.getHeader("token");
-			Assert.isTrue(CommonsUtil.isNotBlank(token), "请登录!");
+			Assert.isTrue(CommonsUtil.isNotBlank(token), ResultMsgEnum.USER_NO_LOGIN);
 			Claims claims = JwtUtil.parseJWT(token);
-			Assert.isTrue(CommonsUtil.isNotBlank(claims), "非法加密的token,请重新登录!");
+			Assert.isTrue(CommonsUtil.isNotBlank(claims), ResultMsgEnum.USER_TOKEN_ERROR);
 			Date expirationDate = claims.getExpiration();
 			//判断该token有无失效
 			Assert.isTrue(expirationDate.getTime() >= System.currentTimeMillis(), "会话已过期,请重新登录");

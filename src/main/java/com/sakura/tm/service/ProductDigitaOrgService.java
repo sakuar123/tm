@@ -1,6 +1,8 @@
 package com.sakura.tm.service;
 
 import com.sakura.tm.common.util.JsonResult;
+import com.sakura.tm.common.util.PageData;
+import com.sakura.tm.common.util.PageResult;
 
 /**
  * @author 李七夜
@@ -10,4 +12,8 @@ import com.sakura.tm.common.util.JsonResult;
 public interface ProductDigitaOrgService {
 
 	JsonResult getProductTypeInfo();
+
+	JsonResult getProductInfo();
+
+	PageResult getProductInfo(PageData pageData);
 }

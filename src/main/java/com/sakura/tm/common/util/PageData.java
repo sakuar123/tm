@@ -2,12 +2,17 @@ package com.sakura.tm.common.util;
 
 
 import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.ibatis.type.Alias;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * @author 李七夜
+ */
+@Alias("pd")
 public class PageData extends ConcurrentHashMap implements Map {
 
 	private static final long serialVersionUID = 1L;
