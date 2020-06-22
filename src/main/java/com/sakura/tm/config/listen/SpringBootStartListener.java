@@ -1,6 +1,5 @@
 package com.sakura.tm.config.listen;
 
-import com.sakura.tm.common.exception.ErrorException;
 import com.sakura.tm.common.util.CommonsUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

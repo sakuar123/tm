@@ -11,9 +11,11 @@ import com.sakura.tm.common.util.PageResult;
  */
 public interface ProductDigitaOrgService {
 
-	JsonResult getProductTypeInfo();
-
-	JsonResult getProductInfo();
-
 	PageResult getProductInfo(PageData pageData);
+
+	JsonResult getProductDetail(Integer id);
+
+	JsonResult addShoppingTrolley(PageData pageData);
+
+	PageResult getUserShoppingTrolley(PageData pageData);
 }

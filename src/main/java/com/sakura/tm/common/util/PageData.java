@@ -1,6 +1,7 @@
 package com.sakura.tm.common.util;
 
 
+import com.sakura.tm.common.emnu.EnumInterceptorDefineParams;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.ibatis.type.Alias;
 
@@ -46,14 +47,14 @@ public class PageData extends ConcurrentHashMap implements Map {
 			returnMap.put(name, StringEscapeUtils.unescapeHtml(value));//对html转义
 		}
 		//内置参数
-//		for(EnumInterceptorDefineParams param:EnumInterceptorDefineParams.values()){
-//			String ParamKey= param.getName();
-//			String paramVal = (String)request.getAttribute(ParamKey);
-//			if(!CommonUtils.isEmptyString(paramVal)){
-//				returnMap.remove(ParamKey);
-//				returnMap.put(ParamKey, paramVal);
-//			}
-//		}
+		for(EnumInterceptorDefineParams param:EnumInterceptorDefineParams.values()){
+			String ParamKey= param.getName();
+			String paramVal = (String)request.getAttribute(ParamKey);
+			if (CommonsUtil.isNotBlank(paramVal)) {
+				returnMap.remove(ParamKey);
+				returnMap.put(ParamKey, paramVal);
+			}
+		}
 		map = returnMap;
 	}
 

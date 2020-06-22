@@ -10,7 +10,7 @@
     <context id="default" targetRuntime="MyBatis3">
         <!-- 带上序列化接口 -->
         <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
-        <plugin type="org.mybatis.generator.plugins.LombokPlug">
+        <plugin type="org.mybatis.generator.plugins.LombokPlugin">
             <property name="hasLombok" value="true"/>
         </plugin>
         <plugin type="com.itfsw.mybatis.generator.plugins.ExampleEnhancedPlugin"/>
@@ -69,7 +69,7 @@
         </javaClientGenerator>
 
         <!-- 数据表进行生成操作 tableName:表名; domainObjectName:对应的DO -->
-        <table tableName="product_org"
+        <table tableName="tax_site_situation_white_list"
                enableSelectByExample="false"
                enableDeleteByExample="false"
                enableUpdateByExample="false">

@@ -2,19 +2,26 @@ package com.sakura.tm.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
+import com.sakura.tm.common.entity.ProductDetailOrg;
 import com.sakura.tm.common.entity.ProductOrg;
 import com.sakura.tm.common.entity.ProductTypeOrg;
+import com.sakura.tm.common.entity.UserShoppingTrolley;
+import com.sakura.tm.common.entity.example.ProductDetailOrgExample;
 import com.sakura.tm.common.entity.example.ProductOrgExample;
 import com.sakura.tm.common.util.CommonsUtil;
 import com.sakura.tm.common.util.JsonResult;
 import com.sakura.tm.common.util.PageData;
 import com.sakura.tm.common.util.PageResult;
+import com.sakura.tm.dao.mapper.ProductDetailOrgMapper;
 import com.sakura.tm.dao.mapper.ProductOrgMapper;
 import com.sakura.tm.dao.mapper.ProductTypeOrgMapper;
+import com.sakura.tm.dao.mapper.UserShoppingTrolleyMapper;
 import com.sakura.tm.service.ProductDigitaOrgService;
 import lombok.extern.slf4j.Slf4j;
+import org.omg.CORBA.INTERNAL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -29,27 +36,11 @@ import java.util.stream.Collectors;
 @Service
 public class ProductDigitaOrgServiceImpl implements ProductDigitaOrgService {
 	@Autowired
-	private ProductTypeOrgMapper productTypeOrgMapper;
-	@Autowired
 	private ProductOrgMapper productOrgMapper;
-
-	@Override
-	public JsonResult getProductTypeInfo() {
-		PageData result = new PageData();
-		List<ProductTypeOrg> productTypeOrgList = productTypeOrgMapper.selectAll();
-		List<String> productTypeIList = productTypeOrgList.stream().filter(productTypeOrg -> productTypeOrg.getParentId().equals(0)).map(ProductTypeOrg::getName).collect(Collectors.toList());
-		List<Integer> productIdIList = productTypeOrgList.stream().filter(productTypeOrg -> productTypeOrg.getParentId().equals(0)).map(ProductTypeOrg::getId).collect(Collectors.toList());
-		Map<Integer, String> map = productTypeOrgList.stream().filter(productTypeOrg -> productIdIList.contains(productTypeOrg.getParentId())).collect(Collectors.toMap(ProductTypeOrg::getParentId, ProductTypeOrg::getName, (s1, s2) -> s1 + "," + s2));
-		result.put("I", JSON.toJSON(productTypeIList));
-		result.put("II", JSON.toJSON(map));
-		return JsonResult.success(result);
-	}
-
-	@Override
-	public JsonResult getProductInfo() {
-		List<PageData> result = productOrgMapper.query();
-		return JsonResult.success(result);
-	}
+	@Autowired
+	private ProductDetailOrgMapper productDetailOrgMapper;
+	@Autowired
+	private UserShoppingTrolleyMapper userShoppingTrolleyMapper;
 
 	@Override
 	public PageResult getProductInfo(PageData pageData) {
@@ -65,5 +56,43 @@ public class ProductDigitaOrgServiceImpl implements ProductDigitaOrgService {
 		return PageResult.success(result);
 	}
 
+	/**
+	 * 商品详情
+	 * @param id
+	 * @return
+	 */
+	@Override
+	public JsonResult getProductDetail(Integer id) {
+		ProductDetailOrg productDetailOrg = productDetailOrgMapper.selectOneByExample(new ProductDetailOrgExample().or().andIdEqualTo(id).example());
+		return JsonResult.success(productDetailOrg);
+	}
 
+	/**
+	 * 添加购物车
+	 * @param pageData
+	 * @return
+	 */
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public JsonResult addShoppingTrolley(PageData pageData) {
+		Integer userId = pageData.getIntegerVal("userId");
+		Integer productId = pageData.getIntegerVal("productId");
+		try {
+			userShoppingTrolleyMapper.ignoreInsertSelective(UserShoppingTrolley.builder().userId(userId).productId(productId).build());
+			return JsonResult.success();
+		} catch (Exception e) {
+			log.error("保存购物车时异常:" + e.getMessage());
+			return JsonResult.fail("加入购物车失败!");
+		}
+	}
+
+	/**
+	 * 购物车展示
+	 * @param pageData
+	 * @return
+	 */
+	@Override
+	public PageResult getUserShoppingTrolley(PageData pageData) {
+		return null;
+	}
 }

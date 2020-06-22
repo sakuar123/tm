@@ -4,14 +4,18 @@ server:
 #数据库连接以及redis配置
 spring:
   datasource:
-    #数据库连接url
-    url: jdbc:mysql://localhost:3306/tm?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
-    #用户名
-    username: sakura
-    #密码
-    password: sakura
-    #指定连接驱动
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    master:
+      jdbc-url: jdbc:mysql://localhost:3306/tm?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+      username: sakura
+      password: sakura
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      database: mysql
+    other:
+      jdbc-url: jdbc:mysql://localhost:3306/smbms?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+      username: sakura
+      password: sakura
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      database: mysql
   jpa:
     #指定数据类型
     database: mysql
@@ -38,7 +42,7 @@ mybatis:
   #mapper映射文件地址
   mapper-locations: classpath*:mybatis/mapper/*.xml
   #别名实体类地址
-  type-aliases-package: com.sakura.tm.common.entity,com.sakura.tm.common.util.PageData
+  type-aliases-package: com.sakura.tm.common.entity
 #PageHelper配置
 pagehelper:
   reasonable: true
