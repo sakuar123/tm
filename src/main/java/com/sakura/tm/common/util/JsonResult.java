@@ -1,6 +1,7 @@
 package com.sakura.tm.common.util;
 
 
+import com.alibaba.fastjson.JSON;
 import com.sakura.tm.common.emnu.CommonsCodeEnum;
 import com.sakura.tm.common.emnu.IMessageConstant;
 import com.sakura.tm.common.exception.ErrorException;
@@ -67,5 +68,9 @@ public class JsonResult<T> {
 
 	public static JsonResult of(Integer code, String message, Object data) {
 		return JsonResult.builder().data(data).message(message).code(code).build();
+	}
+
+	public String toJSONString() {
+		return JSON.toJSONString(this);
 	}
 }
