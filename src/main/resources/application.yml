@@ -5,15 +5,15 @@ server:
 spring:
   datasource:
     master:
-      jdbc-url: jdbc:mysql://localhost:3306/tm?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
-      username: sakura
-      password: sakura
+      jdbc-url: jdbc:mysql://localhost:3306/sys?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+      username: root
+      password: 123456
       driver-class-name: com.mysql.cj.jdbc.Driver
       database: mysql
     other:
-      jdbc-url: jdbc:mysql://localhost:3306/smbms?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
-      username: sakura
-      password: sakura
+      jdbc-url: jdbc:mysql://localhost:3306/sys?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+      username: root
+      password: 123456
       driver-class-name: com.mysql.cj.jdbc.Driver
       database: mysql
   jpa:
