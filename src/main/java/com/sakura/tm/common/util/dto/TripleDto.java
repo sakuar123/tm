@@ -1,4 +1,4 @@
-package com.sakura.tm.common.util;
+package com.sakura.tm.common.util.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

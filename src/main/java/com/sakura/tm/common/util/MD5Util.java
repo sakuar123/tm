@@ -1,15 +1,12 @@
 package com.sakura.tm.common.util;
 
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.util.DigestUtils;
 
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Created by 李七夜 on 2020/5/8 19:02
+ * @author 李七夜
  */
 @Slf4j
 public class MD5Util {
@@ -23,6 +20,17 @@ public class MD5Util {
 		////生成从ASCII 32到126组成的随机字符串 （包括符号）
 //		String salt = RandomStringUtils.randomAscii(12);
 		String base = Base64Utils.getEncode(plainText);
+		return DigestUtils.md5DigestAsHex(base.getBytes());
+	}
+
+	/**
+	 * 可带入盐的MD5加密
+	 * @param plainText
+	 * @param salt
+	 * @return
+	 */
+	public static String getMd5(String plainText, String salt) {
+		String base = Base64Utils.getEncode(plainText + salt);
 		return DigestUtils.md5DigestAsHex(base.getBytes());
 	}
 }

@@ -1,25 +1,30 @@
 package com.sakura.tm.common.util;
 
 
-import com.sakura.tm.common.emnu.EnumInterceptorDefineParams;
-import org.apache.commons.lang.StringEscapeUtils;
-import org.apache.ibatis.type.Alias;
+import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpServletRequest;
-import java.math.BigDecimal;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
+
+import org.apache.commons.lang.StringEscapeUtils;
+
+import com.sakura.tm.common.emnu.EnumInterceptorDefineParams;
 
 /**
  * @author 李七夜
  */
-@Alias("pd")
 public class PageData extends ConcurrentHashMap implements Map {
 
 	private static final long serialVersionUID = 1L;
 
-	Map map = null;
-	HttpServletRequest request;
+	private Map map = null;
+	private HttpServletRequest request;
 
 	public PageData(HttpServletRequest request) {
 		this.request = request;

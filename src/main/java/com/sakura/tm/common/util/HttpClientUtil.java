@@ -1,9 +1,28 @@
 package com.sakura.tm.common.util;
 
-import com.alibaba.fastjson.JSON;
+import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.http.*;
+import org.apache.http.Header;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpVersion;
+import org.apache.http.NameValuePair;
+import org.apache.http.ParseException;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -29,26 +48,12 @@ import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
-import java.io.IOException;
-import java.net.URLEncoder;
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import com.alibaba.fastjson.JSON;
 
 /**
  * @author 李七夜
  */
 public class HttpClientUtil {
-	private static final String charSet = "UTF-8";
 	/** https协议的请求客户端 */
 	private static CloseableHttpClient httpsClient = null;
 
@@ -477,7 +482,7 @@ public class HttpClientUtil {
 
 	public static HttpResponseDTO postHttpsRestfulAPI(String url, List<Header> headers, String json) {
 		Assert.notNull(url, "url must not null");
-		Assert.notNull(charSet, "charSet must not null");
+		Assert.notNull(StandardCharsets.UTF_8.name(), "charSet must not null");
 		HttpResponseDTO result = new HttpResponseDTO();
 		CloseableHttpResponse response = null;
 		try {
@@ -488,7 +493,7 @@ public class HttpClientUtil {
 					postMethod.addHeader(header);
 				}
 			}
-			HttpEntity item = new ByteArrayEntity(json.getBytes(charSet));
+			HttpEntity item = new ByteArrayEntity(json.getBytes(StandardCharsets.UTF_8.name()));
 			postMethod.setEntity(item);
 			// 根据url 区分请求协议
 			if (StringUtils.startsWithIgnoreCase(url, "https://")) {
@@ -496,7 +501,7 @@ public class HttpClientUtil {
 			} else {
 				response = getHttpClient().execute(postMethod);
 			}
-			result = executeResponse(response, charSet);
+			result = executeResponse(response, StandardCharsets.UTF_8.name());
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		} finally {
@@ -569,8 +574,6 @@ public class HttpClientUtil {
 	public static void main(String[] args) {
 		String url = "https://api-test.weifengqi18.com/wuneng-web-api/api/digital/getTaxVatDeclarationList?interface_code=e559ce0a20a44ed99bc7321c33d85ee25urq8&taxpayer_id=91330106MA2CFGY2XC&notice_id=weifengqi_notice_02_3896&secret_key=2TT0lDD5gB7mxxI5mDi6iSCH5Nl6aPRElFCmks%2Bc%2F2M3XZQTt2XwSH5hvtjrqWdv";
 		HttpResponseDTO httpResponseDTO = executeGet(null, url);
-		System.out.println(JSON.toJSON(httpResponseDTO.reponseResult));
+		log.info(JSON.toJSONString(httpResponseDTO.getReponseResult()));
 	}
-
-
 }

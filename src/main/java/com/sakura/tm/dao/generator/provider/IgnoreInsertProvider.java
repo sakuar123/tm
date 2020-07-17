@@ -1,11 +1,16 @@
 package com.sakura.tm.dao.generator.provider;
 
+import java.util.Set;
+
 import org.apache.ibatis.mapping.MappedStatement;
+
 import tk.mybatis.mapper.MapperException;
 import tk.mybatis.mapper.entity.EntityColumn;
-import tk.mybatis.mapper.mapperhelper.*;
-
-import java.util.Set;
+import tk.mybatis.mapper.mapperhelper.EntityHelper;
+import tk.mybatis.mapper.mapperhelper.MapperHelper;
+import tk.mybatis.mapper.mapperhelper.MapperTemplate;
+import tk.mybatis.mapper.mapperhelper.SelectKeyHelper;
+import tk.mybatis.mapper.mapperhelper.SqlHelper;
 
 /**
  * @author 李七夜

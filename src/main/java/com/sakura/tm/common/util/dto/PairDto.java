@@ -1,4 +1,4 @@
-package com.sakura.tm.common.util;
+package com.sakura.tm.common.util.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class FourDto<L, M, R,T> {
-    private L one;
-    private M two;
-    private R three;
-    private T four;
+public class PairDto<L, R> {
+
+    private L left;
+    private R right;
 }

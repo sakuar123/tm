@@ -94,7 +94,7 @@
         </javaClientGenerator>
 
         <!-- 数据表进行生成操作 tableName:表名; domainObjectName:对应的DO -->
-        <table tableName="am_agent"
+        <table tableName="am_admin"
                 enableSelectByExample="false"
                 enableDeleteByExample="false"
                 enableUpdateByExample="false">

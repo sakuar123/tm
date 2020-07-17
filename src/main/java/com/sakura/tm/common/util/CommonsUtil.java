@@ -97,15 +97,15 @@ public class CommonsUtil {
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
-		byte[] ipAddr = addr.getAddress();
-		String ipAddrStr = "";
+		byte[] ipAddr = Objects.requireNonNull(addr).getAddress();
+		StringBuilder ipAddrStr = new StringBuilder();
 		for (int i = 0; i < ipAddr.length; i++) {
 			if (i > 0) {
-				ipAddrStr += ".";
+				ipAddrStr.append(".");
 			}
-			ipAddrStr += ipAddr[i] & 0xFF;
+			ipAddrStr.append(ipAddr[i] & 0xFF);
 		}
-		return ipAddrStr;
+		return ipAddrStr.toString();
 	}
 
 	/**
@@ -172,9 +172,11 @@ public class CommonsUtil {
 			return defaultValue;
 		}
 	}
+
 	public static long parseLong(String s) {
 		return parseLong(s, -1l);
 	}
+
 	public static long parseLong(String s, long defaultValue) {
 		try {
 			return Long.parseLong(s);
