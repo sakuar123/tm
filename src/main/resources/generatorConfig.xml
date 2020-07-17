@@ -8,11 +8,25 @@
     <!--指定特定数据库的jdbc驱动jar包的位置(绝对路径)-->
     <classPathEntry location="${jdbc.driverLocation}"/>
     <context id="default" targetRuntime="MyBatis3">
+
         <!-- 带上序列化接口 -->
         <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <!--为实体类带上lombok-->
         <plugin type="org.mybatis.generator.plugins.LombokPlugin">
             <property name="hasLombok" value="true"/>
         </plugin>
+        <!--Mapper.java文件重新密码,统一将原先的${表名}Mapper.java重新命名为:${表名}GeneratorMapper.java-->
+        <plugin type="org.mybatis.generator.plugins.RenameJavaMapperPlugin">
+            <property name="searchString" value="Mapper$"/>
+            <property name="replaceString" value="GeneratorMapper"/>
+        </plugin>
+        <!-- 此处是将${表名}Mapper.xml改名为${表名}Dao.xml 当然 想改成什么都行~ -->
+        <!--        <plugin type="org.mybatis.generator.plugins.RenameSqlMapperPlugin">-->
+        <!--            <property name="searchString" value="Mapper" />-->
+        <!--            <property name="replaceString" value="Dao" />-->
+        <!--        </plugin>-->
+        <plugin type="org.mybatis.generator.plugins.MapperAnnotationPlugin"/>
+        <!--Mapper文件增强插件,生成的Mapper文件自动带上@Mapper注解-->
         <plugin type="com.itfsw.mybatis.generator.plugins.ExampleEnhancedPlugin"/>
         <!--Example 目标包修改插件-->
         <plugin type="com.itfsw.mybatis.generator.plugins.ExampleTargetPlugin">
@@ -20,7 +34,7 @@
             <property name="targetPackage" value="com.sakura.tm.common.entity.example"/>
         </plugin>
         <!-- 数据Model属性对应Column获取插件 -->
-        <plugin type="com.itfsw.mybatis.generator.plugins.ModelColumnPlugin" />
+        <plugin type="com.itfsw.mybatis.generator.plugins.ModelColumnPlugin"/>
         <!-- 指定生成 Mapper 的继承模板 -->
         <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
             <property name="mappers" value="com.sakura.tm.dao.generator.BaseGeneratorMapper"/>
@@ -31,14 +45,20 @@
             <property name="template" value="src/main/resources/mybatis-generator-comment.ftl"/>
         </plugin>
         <!--覆盖生成XML文件 每次执行，把以前的mapper.xml覆盖而不是合并-->
-        <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin" />
+        <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin"/>
+        <!-- 自动为entity生成swagger2文档-->
+        <plugin type="mybatis.generator.plugins.GeneratorSwagger2Doc">
+            <property name="apiModelAnnotationPackage" value="io.swagger.annotations.ApiModel"/>
+            <property name="apiModelPropertyAnnotationPackage" value="io.swagger.annotations.ApiModelProperty"/>
+        </plugin>
+
         <commentGenerator>
             <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
             <property name="suppressAllComments" value="true"/>
         </commentGenerator>
         <!--jdbc的数据库连接：驱动类、链接地址、用户名、密码-->
         <jdbcConnection driverClass="${jdbc.driverClass}" connectionURL="${jdbc.connectionURL}"
-                        userId="${jdbc.userId}" password="${jdbc.password}">
+                userId="${jdbc.userId}" password="${jdbc.password}">
         </jdbcConnection>
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
@@ -59,7 +79,7 @@
         </javaModelGenerator>
 
         <!--Mapper映射文件生成所在的目录 为每一个数据库的表生成对应的SqlMap.xml文件 -->
-        <sqlMapGenerator targetPackage="mybatis.mapper" targetProject="${jdbc.basePath}\src\main\resources" >
+        <sqlMapGenerator targetPackage="mybatis.mapper" targetProject="${jdbc.basePath}\src\main\resources">
             <property name="enableSubPackages" value="false"/>
         </sqlMapGenerator>
         <!-- 客户端代码，生成易于使用的针对Model对象和XML配置文件 的代码
@@ -68,16 +88,16 @@
                 type="XMLMAPPER",生成SQLMap XML文件和独立的Mapper接口
         -->
         <javaClientGenerator targetPackage="com.sakura.tm.dao.mapper"
-                             targetProject="${jdbc.basePath}\src\main\java"
-                             type="XMLMAPPER" >
+                targetProject="${jdbc.basePath}\src\main\java"
+                type="XMLMAPPER">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
         <!-- 数据表进行生成操作 tableName:表名; domainObjectName:对应的DO -->
-        <table tableName="am_commission"
-               enableSelectByExample="false"
-               enableDeleteByExample="false"
-               enableUpdateByExample="false">
+        <table tableName="am_agent"
+                enableSelectByExample="false"
+                enableDeleteByExample="false"
+                enableUpdateByExample="false">
             <generatedKey column="id" sqlStatement="JDBC"/>
             <!--            <columnOverride column="update_time" javaType="java.util.Date"/>-->
             <!--            <columnOverride column="create_time" javaType="java.util.Date"/>-->

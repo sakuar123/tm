@@ -6,7 +6,8 @@
 
   <comment ID="addComment"><![CDATA[
 
-    ]]></comment>
+    ]]>
+  </comment>
 
 
   <comment ID="addRootComment"></comment>
@@ -14,27 +15,32 @@
 
   <comment ID="addFieldComment"><![CDATA[
 
-    ]]></comment>
+    ]]>
+  </comment>
 
 
   <comment ID="addModelClassComment"><![CDATA[
 
-    ]]></comment>
+    ]]>
+  </comment>
 
 
   <comment ID="addClassComment"><![CDATA[
 
-    ]]></comment>
+    ]]>
+  </comment>
 
 
   <comment ID="addEnumComment"><![CDATA[
 
-    ]]></comment>
+    ]]>
+  </comment>
 
 
   <comment ID="addInterfaceComment"><![CDATA[
 
-    ]]></comment>
+    ]]>
+  </comment>
 
 
   <comment ID="addGetterComment"><![CDATA[
@@ -43,7 +49,8 @@
       <#else>
 
       </#if>
-    ]]></comment>
+    ]]>
+  </comment>
 
 
   <comment ID="addSetterComment"><![CDATA[
@@ -52,7 +59,8 @@
       <#else>
 
       </#if>
-    ]]></comment>
+    ]]>
+  </comment>
 
 
   <comment ID="addGeneralMethodComment"><![CDATA[]]></comment>
