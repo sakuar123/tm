@@ -1,56 +1,59 @@
 package com.sakura.tm.config.interceptor;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.sakura.tm.common.annotation.Permission;
-import com.sakura.tm.common.emnu.ResultMsgEnum;
-import com.sakura.tm.common.util.Assert;
-import com.sakura.tm.common.util.CommonConstant;
-import com.sakura.tm.common.util.CommonsUtil;
-import com.sakura.tm.common.util.JwtUtil;
-import io.jsonwebtoken.Claims;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
+import com.sakura.tm.common.annotation.Permission;
+import com.sakura.tm.common.enums.EnumInterceptorDefineParams;
+import com.sakura.tm.common.enums.EnumJsonResultMsg;
+import com.sakura.tm.common.util.Assert;
+import com.sakura.tm.common.util.JwtUtil;
+import com.sakura.tm.common.util.JwtUtil.JwtUser;
+import com.sakura.tm.common.util.ObejctTools;
 
 /**
  * Created by 李七夜 on 2020/5/14 15:49
  * 登录校验拦截器
+ *
  * @author 李七夜
  */
 public class TicketInterceptor extends HandlerInterceptorAdapter {
 
-	@Autowired
-	private RedisTemplate<String, String> redisTemplate;
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
 
-	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-		if (handler instanceof HandlerMethod) {
-			HandlerMethod handlerMethod = (HandlerMethod) handler;
-			Permission permission = handlerMethod.getMethodAnnotation(Permission.class);
-			//不需要登录,直接放行
-			if (permission.noLogin()) {
-				return true;
-			}
-			//登录所携带的token
-			String token = request.getHeader("token");
-			Assert.isTrue(CommonsUtil.isNotBlank(token), ResultMsgEnum.USER_NO_LOGIN);
-			Claims claims = JwtUtil.parseJWT(token);
-			Assert.isTrue(CommonsUtil.isNotBlank(claims), ResultMsgEnum.USER_TOKEN_ERROR);
-			Date expirationDate = claims.getExpiration();
-			//判断该token有无失效
-			Assert.isTrue(expirationDate.getTime() >= System.currentTimeMillis(), "会话已过期,请重新登录");
-			JSONObject jsonObject = JSONObject.parseObject(JSON.toJSON(claims).toString());
-			Assert.isTrue(CommonsUtil.isNotBlank(redisTemplate.opsForHash().get(CommonConstant.REDIS_USER_KEY, jsonObject.getString("id"))), "账号异常,请重新登录");
-			//从缓存里将userId拿出来
-			String userId = redisTemplate.opsForHash().get(CommonConstant.REDIS_USER_KEY, jsonObject.getString("id")).toString();
-			request.setAttribute("user_id", userId);
-		}
-		return true;
-	}
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        if (handler instanceof HandlerMethod) {
+
+            HandlerMethod handlerMethod = (HandlerMethod) handler;
+
+            //获取头部的Permission注解标签
+            Permission permission = handlerMethod.getMethodAnnotation(Permission.class);
+
+            //不需要登录,直接放行
+            if (permission != null && permission.noLogin()) {
+                return true;
+            }
+
+            //从请求中获取登录的token
+            String authToken = request.getHeader("authToken");
+
+            //如果没有则直接报错,让用户必须登录
+            Assert.isTrue(ObejctTools.isNotBlank(authToken), EnumJsonResultMsg.USER_NOT_LOGIN);
+
+            //解析登录的Token
+            JwtUser jwtUser = JwtUtil.parseJwt(authToken);
+            Assert.isTrue(ObejctTools.isNotBlank(authToken), EnumJsonResultMsg.USER_TOKEN_ERR);
+
+            request.setAttribute(EnumInterceptorDefineParams.USER_ID.getName(), jwtUser.getUserId());
+
+        }
+        return true;
+    }
 }

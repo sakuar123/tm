@@ -1,4 +1,4 @@
-package com.sakura.tm.common.emnu;
+package com.sakura.tm.common.enums.base;
 
 /**
  * @author 李七夜

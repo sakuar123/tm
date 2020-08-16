@@ -14,7 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
-import com.sakura.tm.common.emnu.EnumInterceptorDefineParams;
+import com.sakura.tm.common.enums.EnumInterceptorDefineParams;
+
 
 /**
  * @author 李七夜

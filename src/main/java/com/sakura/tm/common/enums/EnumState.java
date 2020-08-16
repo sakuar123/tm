@@ -1,4 +1,4 @@
-package com.sakura.tm.common.emnu;
+package com.sakura.tm.common.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

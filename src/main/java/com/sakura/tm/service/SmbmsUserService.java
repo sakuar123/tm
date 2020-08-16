@@ -2,7 +2,7 @@ package com.sakura.tm.service;
 
 import com.sakura.tm.common.entity.SmbmsUser;
 import com.sakura.tm.common.util.PageResult;
-import com.sakura.tm.web.query.BaseQuery;
+import com.sakura.tm.web.query.SmbmsUserQuery;
 
 /**
  * @author 李七夜
@@ -10,6 +10,6 @@ import com.sakura.tm.web.query.BaseQuery;
  */
 public interface SmbmsUserService {
 
-    PageResult<SmbmsUser> list(BaseQuery baseQuery);
+    PageResult<SmbmsUser> list(SmbmsUserQuery smbmsUserQuery);
 
 }

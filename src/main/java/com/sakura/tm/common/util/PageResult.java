@@ -2,7 +2,7 @@ package com.sakura.tm.common.util;
 
 import java.util.List;
 
-import com.sakura.tm.common.emnu.CommonsCodeEnum;
+import com.sakura.tm.common.enums.EnumJsonResultMsg;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -23,8 +23,8 @@ public class PageResult<T> {
 
     public static <T> PageResult<T> success(List<T> list) {
         PageResult<T> pageResult = new PageResult<>();
-        pageResult.setCode(CommonsCodeEnum.success.getCode());
-        pageResult.setMessage(CommonsCodeEnum.success.getName());
+        pageResult.setCode(EnumJsonResultMsg.OK.getCode());
+        pageResult.setMessage(EnumJsonResultMsg.OK.getMessage());
         pageResult.setPage(Page.converter((com.github.pagehelper.Page<T>) list));
         return pageResult;
     }

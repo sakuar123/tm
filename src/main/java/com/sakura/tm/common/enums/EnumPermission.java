@@ -1,4 +1,4 @@
-package com.sakura.tm.common.emnu;
+package com.sakura.tm.common.enums;
 
 import lombok.Getter;
 
@@ -6,7 +6,7 @@ import lombok.Getter;
  * Created by 李七夜 on 2020/5/14 15:43
  */
 @Getter
-public enum PermissionEnum {
+public enum EnumPermission {
 	;
 
 	/**

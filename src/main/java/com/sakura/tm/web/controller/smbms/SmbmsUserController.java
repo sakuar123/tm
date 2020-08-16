@@ -9,7 +9,7 @@ import com.sakura.tm.common.annotation.Permission;
 import com.sakura.tm.common.entity.SmbmsUser;
 import com.sakura.tm.common.util.PageResult;
 import com.sakura.tm.service.SmbmsUserService;
-import com.sakura.tm.web.query.BaseQuery;
+import com.sakura.tm.web.query.SmbmsUserQuery;
 
 /**
  * @author 李七夜
@@ -25,7 +25,8 @@ public class SmbmsUserController {
     @CrossOrigin(origins = "*")
     @Permission(noLogin = true)
     @RequestMapping("/list")
-    public PageResult<SmbmsUser> list(BaseQuery baseQuery) {
-        return smbmsUserService.list(baseQuery);
+    public PageResult<SmbmsUser> list(SmbmsUserQuery smbmsUserQuery) {
+        return smbmsUserService.list(smbmsUserQuery);
+
     }
 }

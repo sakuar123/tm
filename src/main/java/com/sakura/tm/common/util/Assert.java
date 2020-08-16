@@ -1,7 +1,6 @@
 package com.sakura.tm.common.util;
 
-import com.sakura.tm.common.emnu.CommonsMessageEnum;
-import com.sakura.tm.common.emnu.IMessageConstant;
+import com.sakura.tm.common.enums.base.IMessageConstant;
 import com.sakura.tm.common.exception.ErrorException;
 
 /**

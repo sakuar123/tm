@@ -1,9 +1,9 @@
 package com.sakura.tm.common.exception;
 
 
-import com.sakura.tm.common.emnu.IMessageConstant;
-import com.sakura.tm.common.emnu.ResultMsgEnum;
+import com.sakura.tm.common.enums.base.IMessageConstant;
 import com.sakura.tm.common.util.JsonResult;
+
 import lombok.Data;
 
 /**

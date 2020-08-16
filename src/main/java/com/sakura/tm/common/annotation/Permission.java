@@ -5,7 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.sakura.tm.common.emnu.PermissionEnum;
+import com.sakura.tm.common.enums.EnumPermission;
 
 /**
  * @author 李七夜
@@ -18,5 +18,5 @@ public @interface Permission {
     boolean noLogin() default false;
 
     //权限校验
-    PermissionEnum[] permissionEnums() default {};
+    EnumPermission[] permissionEnums() default {};
 }

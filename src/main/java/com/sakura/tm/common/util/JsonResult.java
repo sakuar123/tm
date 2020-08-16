@@ -2,8 +2,8 @@ package com.sakura.tm.common.util;
 
 
 import com.alibaba.fastjson.JSON;
-import com.sakura.tm.common.emnu.CommonsCodeEnum;
-import com.sakura.tm.common.emnu.IMessageConstant;
+import com.sakura.tm.common.enums.EnumJsonResultMsg;
+import com.sakura.tm.common.enums.base.IMessageConstant;
 import com.sakura.tm.common.exception.ErrorException;
 
 import lombok.AllArgsConstructor;
@@ -37,45 +37,43 @@ public class JsonResult<T> {
      */
     private T data;
 
-    public static JsonResult success() {
-        return of(CommonsCodeEnum.success.getCode(), CommonsCodeEnum.success.getName(), true);
+    public static <T> JsonResult<T> success() {
+        return of(EnumJsonResultMsg.OK.getCode(), "success", null);
     }
 
-    public static <T> JsonResult success(T data) {
-        return of(CommonsCodeEnum.success.getCode(), CommonsCodeEnum.success.getName(), data);
+    public static <T> JsonResult<T> success(T o) {
+        return of(EnumJsonResultMsg.OK.getCode(), "success", o);
     }
 
-    public static JsonResult fail(Exception e) {
-        log.error(e.getMessage());
-        return of(CommonsCodeEnum.fail.getCode(), "系统异常");
+    public static <T> JsonResult<T> fail() {
+        return of(EnumJsonResultMsg.ERROR.getCode(), EnumJsonResultMsg.ERROR.getMessage(), null);
     }
 
-    public static JsonResult result(IMessageConstant iMessageConstant) {
-        return of(iMessageConstant.getCode(), iMessageConstant.getMessage());
+    public static <T> JsonResult<T> fail(String message) {
+        return of(EnumJsonResultMsg.ERROR.getCode(), message, null);
     }
 
-    public static JsonResult fail(String message) {
-        return of(CommonsCodeEnum.fail.getCode(), message);
-    }
-
-    public static JsonResult fail(Throwable e) {
-        log.error(e.getMessage());
-        return of(CommonsCodeEnum.fail.getCode(), "系统异常");
-    }
-
-    public static JsonResult fail(ErrorException e) {
-        return of(e.getCode(), e.getMessage());
-    }
-
-    public static JsonResult of(Integer code, String message) {
+    public static <T> JsonResult<T> fail(Integer code, String message) {
         return of(code, message, null);
     }
 
-    public static JsonResult of(Integer code, String message, Object data) {
-        return JsonResult.builder().data(data).message(message).code(code).build();
+    public static <T> JsonResult<T> of(ErrorException e) {
+        return of(e.getCode(), e.getMsg(), null);
     }
 
-    public String toJSONString() {
+    public static <T> JsonResult<T> of(IMessageConstant e) {
+        return of(e.getCode(), e.getMessage(), null);
+    }
+
+    public static <T> JsonResult<T> of(Integer code, String msg) {
+        return of(code, msg, null);
+    }
+
+    private static <T> JsonResult<T> of(Integer code, String msg, T data) {
+        return JsonResult.<T>builder().code(code).message(msg).data(data).build();
+    }
+
+    public String toJsonString() {
         return JSON.toJSONString(this);
     }
 }

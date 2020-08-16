@@ -1,23 +1,21 @@
 package com.sakura.tm.common.util;
 
-import com.alibaba.fastjson.JSON;
-import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.lang3.StringUtils;
-
 import java.lang.reflect.Array;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Random;
+import java.util.UUID;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class CommonsUtil {
 
-	/**
-	 * 获取ticketID
-	 * @return ticketID
-	 */
-	public static String getTicketid() {
-		return UUID.randomUUID().toString().toLowerCase() + getRandomNumber(0, 999);
-	}
 
 	/**
 	 * 获取一个随机数
@@ -33,6 +31,11 @@ public class CommonsUtil {
 		return ret;
 	}
 
+	/**
+	 * 判断对象是否为空,为空返回true,非空为false
+	 * @param o
+	 * @return
+	 */
 	public static boolean isBlank(Object o) {
 		if (o == null) {
 			return true;
@@ -59,13 +62,17 @@ public class CommonsUtil {
 		return false;
 	}
 
+    /**
+     * 判断对象是否不为空,为空返回false,不为空返回true
+	 * @param o
+     * @return
+     */
 	public static boolean isNotBlank(Object o) {
 		return !isBlank(o);
 	}
 
 	public static void main(String[] args) {
-//		System.out.println(RandomStringUtils.random(15, false, true));
-		System.out.println(JSON.toJSON(getIdentityInfoByIdCard("452123198911195219")));
+
 	}
 
 	/**
@@ -195,5 +202,13 @@ public class CommonsUtil {
 		} catch (Exception e) {
 			return defaultValue;
 		}
+	}
+
+    /**
+     * 获取一段随机字符串
+	 * @return
+     */
+	public static String getUUID() {
+		return UUID.randomUUID().toString().replace("-", "");
 	}
 }
